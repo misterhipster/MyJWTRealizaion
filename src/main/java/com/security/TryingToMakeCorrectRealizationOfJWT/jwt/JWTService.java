@@ -24,7 +24,6 @@ public class JWTService {
                 .withSubject("AllMine")
                 .withClaim("email", email)
                 .withIssuedAt(new Date())
-//                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60*24))
                 .withIssuer("MIQ")
                 .sign(Algorithm.HMAC256(secret));
     }

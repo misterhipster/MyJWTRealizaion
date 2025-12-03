@@ -16,6 +16,7 @@ public class UserDetailsInfoPayload {
     private String iat;
     private String email;
 
-    public UserDetailsInfoPayload(String email, long l) {
-    }
+//    public UserDetailsInfoPayload(String email, long l) {
+//        this.email = email;
+//    }
 }

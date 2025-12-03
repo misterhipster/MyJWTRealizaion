@@ -49,6 +49,8 @@ public class UserService {
                     new UsernamePasswordAuthenticationToken(loginCred.getEmail(), loginCred.getPassword());
             System.out.println("все гуд 2222");
 
+//            System.out.println(authInputToken.toString());
+
             authenticationManager.authenticate(authInputToken);
             System.out.println("все гуд 3333");
 
@@ -69,6 +71,7 @@ public class UserService {
                     new ObjectMapper().readValue(payload, UserDetailsInfoPayload.class),
                     token);
         } catch (AuthenticationException authExc) {
+            authExc.printStackTrace(); // Добавьте это!
             throw new RuntimeException("Invalid Login Credentials");
         } catch (JsonProcessingException e) {
             e.printStackTrace();

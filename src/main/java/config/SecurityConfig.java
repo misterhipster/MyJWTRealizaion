@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,33 +28,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 //        http
-//                .csrf(csrf -> csrf.disable()) // Полностью отключаем CSRF
+//                .csrf(csrf -> csrf.disable())
 //                .authorizeHttpRequests(auth -> auth
 //                        .anyRequest().permitAll() // Разрешаем ВСЕ запросы
 //                )
 //                .headers(headers -> headers
-//                        .frameOptions(frame -> frame.disable()) // Разрешаем iframe
+//                        .frameOptions(frame -> frame.disable())
 //                );
+
+//        http
+//                .csrf(csrf -> csrf.disable())
+//
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/**").permitAll() // Разрешаем все /api endpoints
+//                        .requestMatchers("/h2-console/**").permitAll()
+//                        .anyRequest().authenticated()
+//                )
+//                .sessionManagement(session -> session
+//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                );
+
         http
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // Отключаем CSRF для H2 Console
-                        .disable())
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/auth/**").permitAll() // Разрешаем ВСЕ запросы
                 )
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(
-                                (request, response, authException) ->
-                                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")
-                        )
-                )
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
                 );
 
-//        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -66,7 +70,7 @@ public class SecurityConfig {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(uds);
-        authProvider.setPasswordEncoder(passwordEncoder()   );
+        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 
