@@ -1,5 +1,7 @@
 # сгенерировал командой openssl rand -base64 32
 jwt-secret: ceLmqhqu0sEppkH4WAfaFj1J+DJrthRpo2EkV8N/0X8=
+#logging.level.com.security.TryingToMakeCorrectRealizationOfJWT=DEBUG
+#logging.level.com.security.TryingToMakeCorrectRealizationOfJWT.jwt=TRACE
 
 spring:
   application:

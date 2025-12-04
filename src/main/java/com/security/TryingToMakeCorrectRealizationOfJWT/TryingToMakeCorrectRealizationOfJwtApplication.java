@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 })
 public class TryingToMakeCorrectRealizationOfJwtApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TryingToMakeCorrectRealizationOfJwtApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TryingToMakeCorrectRealizationOfJwtApplication.class, args);
+    }
 
 }

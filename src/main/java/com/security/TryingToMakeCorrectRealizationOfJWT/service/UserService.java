@@ -15,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,24 +34,17 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
-//        String token = jwtService.generateToken(user.getEmail());
-//        return token;
         return jwtService.generateToken(user.getEmail());
     }
 
 
     public UserDetailsInfo login(UserDTO loginCred) {
         try {
-            System.out.println("все гуд 1111");
-
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(loginCred.getEmail(), loginCred.getPassword());
-            System.out.println("все гуд 2222");
 
-//            System.out.println(authInputToken.toString());
 
             authenticationManager.authenticate(authInputToken);
-            System.out.println("все гуд 3333");
 
             String token = jwtService.generateToken(loginCred.getEmail());
 
@@ -62,7 +54,6 @@ public class UserService {
             Base64.Decoder decoder = Base64.getUrlDecoder();
 
             String header = new String(decoder.decode(chunks[0]));
-            System.out.println("все гуд 4444");
             String payload = new String(decoder.decode(chunks[1]));
 
 
@@ -81,6 +72,6 @@ public class UserService {
 
     public User getUserInfo() {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByEmail(email); //.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return userRepository.findByEmail(email);
     }
 }

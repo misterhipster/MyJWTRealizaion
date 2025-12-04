@@ -2,7 +2,6 @@ package config;
 
 import com.security.TryingToMakeCorrectRealizationOfJWT.jwt.CustomUserDetailService;
 import com.security.TryingToMakeCorrectRealizationOfJWT.jwt.JWTFilter;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,31 +25,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> auth
-//                        .anyRequest().permitAll() // Разрешаем ВСЕ запросы
-//                )
-//                .headers(headers -> headers
-//                        .frameOptions(frame -> frame.disable())
-//                );
-
-//        http
-//                .csrf(csrf -> csrf.disable())
-//
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/**").permitAll() // Разрешаем все /api endpoints
-//                        .requestMatchers("/h2-console/**").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                );
-
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll() // Разрешаем ВСЕ запросы
+                        .requestMatchers("/api/debug/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
                         .frameOptions(frame -> frame.disable())
