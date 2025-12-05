@@ -11,6 +11,7 @@ import com.security.TryingToMakeCorrectRealizationOfJWT.model.User;
 import com.security.TryingToMakeCorrectRealizationOfJWT.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -21,21 +22,32 @@ import org.springframework.stereotype.Service;
 import java.util.Base64;
 
 @Service
-@Slf4j
-@RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-    private final JWTService jwtService;
-    private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder passwordEncoder;
+//    private final UserRepository userRepository;
+//    private final JWTService jwtService;
+//    private final AuthenticationManager authenticationManager;
+//    private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private  UserRepository userRepository;
+    @Autowired
+    private  JWTService jwtService;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
 
     public String register(UserDTO userdto) {
 
-        User user = User.builder()
-                .email(userdto.getEmail())
-                .password(userdto.getPassword())
-                .build();
+//        User user = User.builder()
+//                .email(userdto.getEmail())
+//                .password(userdto.getPassword())
+//                .build();
+        User user = new User();
+        user.setEmail(userdto.getEmail());
+        user.setPassword(userdto.getPassword());
+
+
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user = userRepository.save(user);

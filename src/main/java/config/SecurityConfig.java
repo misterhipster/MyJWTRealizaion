@@ -3,6 +3,7 @@ package config;
 import com.security.TryingToMakeCorrectRealizationOfJWT.jwt.CustomUserDetailService;
 import com.security.TryingToMakeCorrectRealizationOfJWT.jwt.JWTFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,10 +19,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class SecurityConfig {
-    private final JWTFilter filter;
-    private final CustomUserDetailService uds;
+//    private final JWTFilter filter;
+//    private final CustomUserDetailService uds;
+    @Autowired
+    private JWTFilter filter;
+    @Autowired
+    private CustomUserDetailService uds;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

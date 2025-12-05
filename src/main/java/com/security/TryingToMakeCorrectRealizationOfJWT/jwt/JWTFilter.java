@@ -3,6 +3,7 @@ package com.security.TryingToMakeCorrectRealizationOfJWT.jwt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -15,10 +16,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.IOException;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
-    private final CustomUserDetailService customUserDetailService;
-    private final JWTService jwtService;
+    //    private final CustomUserDetailService customUserDetailService;
+//    private final JWTService jwtService;
+    @Autowired
+    private CustomUserDetailService customUserDetailService;
+    @Autowired
+    private JWTService jwtService;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
